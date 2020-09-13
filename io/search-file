@@ -1,0 +1,26 @@
+import groovy.io.FileType
+
+// searh folder or file
+new File('../../../../').eachFile {
+    println it.name
+}
+
+// search only file
+new File('../../../../').eachFile(FileType.FILES) {
+    println it.name
+}
+
+// search only dir
+new File('../../../../').eachDir {
+    println it.name
+}
+
+// search file match regex
+new File('../../../../').eachFileMatch(FileType.FILES, ~/[a-z]+.gradle/) {
+    println it.name
+}
+
+// search folder match regex
+new File('../../../../').eachDirMatch(~/[a-z]+/) {
+    println it.name
+}
