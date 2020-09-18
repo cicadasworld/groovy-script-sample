@@ -18,26 +18,26 @@ def sql = Sql.newInstance(url, user, password, driverClassName)
 println "Connected!"
 
 // create schema
-//sql.execute('DROP TABLE IF EXISTS users')
-//sql.execute """
-//CREATE TABLE users   (
-//    id  INT NOT NULL,
-//    username VARCHAR(45) NOT NULL,
-//    bio VARCHAR(45) NULL,
-//    PRIMARY KEY (id)
-//"""
-//
-//def twitterUser = [id: 2, username: 'foo', bio: 'foo']
-//
-//sql.execute """
-//    INSERT INTO users (id, username, bio) VALUES (${twitter.id}, ${twitter.username}, ${twitter.bio})
-//"""
-//
-//def rows = sql.rows("select * from users")
-//println rows
-//
-//sql.eachRow('select * from users') {
-//    println "Tweet: @${it.username}"
-//}
-//
-//sql.close()
+sql.execute('DROP TABLE IF EXISTS users')
+sql.execute """
+CREATE TABLE users   (
+   id  INT NOT NULL,
+   username VARCHAR(45) NOT NULL,
+   bio VARCHAR(45) NULL,
+   PRIMARY KEY (id)
+"""
+
+def twitterUser = [id: 2, username: 'foo', bio: 'foo']
+
+sql.execute """
+   INSERT INTO users (id, username, bio) VALUES (${twitter.id}, ${twitter.username}, ${twitter.bio})
+"""
+
+def rows = sql.rows("select * from users")
+println rows
+
+sql.eachRow('select * from users') {
+   println "Tweet: @${it.username}"
+}
+
+sql.close()
