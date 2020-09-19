@@ -22,8 +22,33 @@ new File(dir).eachFile { f ->
     }
 }
 
-new File('.').eachFile {
-    if (it.name.endsWith(".groovy")) {
-        println it.name
-    }
+new File(dir).eachFile(FileType.FILES) { file ->
+	println file
 }
+
+
+// list specified files(no dir) in a directory
+new File(dir).eachFile() { file ->
+	if (file.isFile() && file.name.endsWith(".groovy")) {
+		println file
+
+	}
+}
+
+new File(dir).eachFile(FileType.FILES) { file ->
+	if (file.name.endsWith(".groovy")) {
+		println file
+	}
+}
+
+new File(dir).eachFile() { file ->
+	if (file.isFile() && file.name ==~/.*\.groovy/) {
+		println file
+	}
+}
+
+new File(dir).eachFile(FileType.FILES, ~/.*\.groovy/) { file ->
+	println file
+}
+
+

@@ -7,8 +7,8 @@
  * root,/
  * dog,root
  * cat,root
- * akita.dog
- * kuro,cat
+ * akita,root/dog
+ * kuro,root/cat
  */
 
 class Row {

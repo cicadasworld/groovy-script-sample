@@ -42,3 +42,27 @@ println days
 days << "Saturday"
 println days
 println days[3]
+
+// sort
+def languages = ["java", "groovy", "jruby"]
+println languages.sort()
+
+// reverse
+println languages.reverse()
+
+//join
+println languages.join()     // javagroovyjruby
+println languages.join(',')  // java,groovy,jruby
+println languages.join(', ') // java, groovy, jruby
+
+// sum
+println languages.sum() // javagroovyjruby
+
+// statistic
+def scores = [80, 90, 70]
+println scores.max()
+println scores.min()
+println scores.sum()
+
+// spread operator(*)
+println languages*.toUpperCase() // [JAVA, GROOVY, JRUBY]
