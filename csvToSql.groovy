@@ -21,7 +21,7 @@ class Unit {
 
 // read csv data file
 def pathToRow = [:]
-new new File("input.csv").eachLine { line, nb ->
+new File("input.csv").eachLine { line, nb ->
  	if (nb == 1 || nb == 2) return // remove first 2 rows
  	def cols = line.replace('"', '').splite(',')
  	def name = cols[0]?.trim()
@@ -31,7 +31,7 @@ new new File("input.csv").eachLine { line, nb ->
  	def location = cols[4]?.trim()
 
  	def path = "$parentPath/$name"
- 	def row = new Row(naem: name, parentPath: parentPath, lng: lng, lat: lat, location: location)
+ 	def row = new Row(name: name, parentPath: parentPath, lng: lng, lat: lat, location: location)
  	if (nb == 3) { // 第三行即根节点，path和name相同
         pathToRow[name] = row
  	} else {
