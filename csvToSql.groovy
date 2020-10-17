@@ -1,6 +1,5 @@
 /**
- * create by
- * @author hujin 2020/9/12
+ * hujin created on 2020/9/12
  *
  * 非解析行
  * 非解析行
@@ -12,27 +11,24 @@
  */
 
 class Row {
- 	String name, parentPath, lng, lat, location
+ 	String name, parentPath
 }
 
 class Unit {
- 	String id, name, parentId, lng, lat, location
+ 	String id, name, fullName, parentId, searchKey, lng, lat, location
 }
 
 // read csv data file
 def pathToRow = [:]
 new File("input.csv").eachLine { line, nb ->
- 	if (nb == 1 || nb == 2) return // remove first 2 rows
- 	def cols = line.replace('"', '').splite(',')
+ 	if (nb == 1) return // remove first row
+ 	def cols = line.replace('"', '').tokenize(',')
  	def name = cols[0]?.trim()
  	def parentPath = cols[1]?.trim()
- 	def lng = cols[2]?.trim()
- 	def lat = cols[3]?.trim()
- 	def location = cols[4]?.trim()
 
  	def path = "$parentPath/$name"
- 	def row = new Row(name: name, parentPath: parentPath, lng: lng, lat: lat, location: location)
- 	if (nb == 3) { // 第三行即根节点，path和name相同
+ 	def row = new Row(name: name, parentPath: parentPath)
+ 	if (nb == 2) { // 第三行即根节点，path和name相同
         pathToRow[name] = row
  	} else {
  		pathToRow[path] = row
@@ -51,10 +47,8 @@ pathToRow.each { path, row ->
 	def id = pathToId[path]
 	def name = row.name
 	def parentId = pathToId[(row.parentPath)]
-	def lng = row.lng
-	def lat = row.lat
-	def location = row.location
-	def unit = new Unit(id: id, name: name, parentId: parentId, lng: lng, lat: lat, location: location)
+	def fullName = path.tokenize('/').join()
+	def unit = new Unit(id: id, name: name, fullName: fullName, parentId: parentId)
 	units << unit
 }
 
@@ -62,20 +56,10 @@ String s = ""
 units.each { unit ->
 	def id = unit.id
 	def name = unit.name
+	def fullName = unit.fullName
 	def parentId = unit.parentId
 	def location = unit.location
-	def sql = "INSERT INTO unit (id, name, parent_id) VALUES ('$id', "
-	if (location) {
-		sql += "'$name($location)',"
-	} else {
-		sql += "'$name',"
-	}
-	if (parentId) {
-		sql += "'$parentId'"
-	} else {
-		sql += parentId
-	}
-	sql += ");\n"
+	def sql = "INSERT INTO unit (id, name, full_name, parent_id) VALUES ('$id', '$name', '$fullName', '$parentId');\n"
 	s += sql
 }
 
